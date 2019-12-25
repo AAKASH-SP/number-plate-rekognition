@@ -17,13 +17,13 @@ with open("sp2project.csv",'r') as input:
         access_key_id = line[2]
         secret_access_key = line[3]
         
-photo = "image.jfif"
-
 client = boto3.client('rekognition',
                       aws_access_key_id = access_key_id,
                       aws_secret_access_key = secret_access_key)
 
 """THE BELOW CAN BE MODIFIED"""
+
+photo = "image.jfif"
 
 with open(photo , 'rb') as source_image:
     source_bytes = source_image.read()
