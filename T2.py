@@ -17,13 +17,13 @@ with open("sp2project.csv",'r') as input:
         access_key_id = line[2]
         secret_access_key = line[3]
         
+photo = "image.jfif"
+
 client = boto3.client('rekognition',
                       aws_access_key_id = access_key_id,
                       aws_secret_access_key = secret_access_key)
 
 """THE BELOW CAN BE MODIFIED"""
-
-photo = "image.jfif"
 
 with open(photo , 'rb') as source_image:
     source_bytes = source_image.read()
@@ -31,15 +31,12 @@ with open(photo , 'rb') as source_image:
 response = client.detect_text(Image={'Bytes':source_bytes})
                               
 print(response)
+result = []
 
 textDetections=response['TextDetections']
 print ('Detected text\n----------')
 for text in textDetections:
     print ('Detected text:' + text['DetectedText'])
-    print ('Confidence: ' + "{:.2f}".format(text['Confidence']) + "%")
-    print ('Id: {}'.format(text['Id']))
-    if 'ParentId' in text:
-        print ('Parent Id: {}'.format(text['ParentId']))
-        print ('Type:' + text['Type'])
-        print()
-
+    if text['Confidence'] > 80 and text['DetectedText'] not in result:
+        result.append(text['DetectedText'])
+print(result)
