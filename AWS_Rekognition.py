@@ -5,6 +5,8 @@ Created on Wed Dec 25 18:34:19 2019
 @author: Arnab Das
 """
 
+"""this program executes in 8seconds"""
+
 import boto3
 import csv
 import datetime
@@ -35,7 +37,7 @@ with open(photo , 'rb') as source_image:
     
 response = clientrek.detect_text(Image={'Bytes':source_bytes})
                               
-result = []
+result = [] #contains all the words detected by AWS Rekognition
 
 textDetections=response['TextDetections']
 print ('Detected text\n----------')
