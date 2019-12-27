@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Dec 25 18:34:19 2019
-
 @author: Arnab Das
 """
 
 import datetime
 import authentication
+import numberplate
+import sys
 
 now = datetime.datetime.now() ; car_count = 0
 
@@ -31,6 +32,13 @@ for text in textDetections:
     
 print(result)
 
+for word in result:
+    if word.isalnum():
+        x = numberplate.number_plate_verify(word)   
+
+if x == 0:
+    sys.exit()
+
 number_plate = result[0]   #the actual number plate data
 
 """Creating a local file"""
@@ -49,3 +57,4 @@ with open(local_file, 'r') as f:
         car_count += 1
 if car_count > 30:
     authentication.clients3.upload_file(local_file,'numberplatedata',s3_file)
+    print("\nS3 bucket updated!!!")
