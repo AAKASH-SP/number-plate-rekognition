@@ -1,0 +1,11 @@
+from PIL import Image
+p1= Image.open('car.jpg')
+ht=p1.size[0]
+wd=p1.size[1]
+p2=p1.convert('L')
+print(p2.size)
+p2.show()
+p2=p2.resize((int(ht*0.5),int(wd*0.5)))
+print(p2.size)
+p2.save('car_edit.jpg')
+p2.show()
